@@ -17,3 +17,14 @@ def matchcity(group):
         
 
 results = firmdata.groupby(['HQ State']).apply(matchcity)
+
+
+
+results = protestsclean.head(10).groupby(['statefips', 'countyfips','year']).apply(issuecalculate)
+
+test = results.index.to_frame(index=False)
+results = pd.DataFrame(results).reset_index(drop=True)
+test['issues'] = results.iloc[:,0]
+test['issuesnum'] = results.iloc[:,1]
+
+print(test)
