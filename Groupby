@@ -19,7 +19,19 @@ def matchcity(group):
 results = firmdata.groupby(['HQ State']).apply(matchcity)
 
 
+def flatten_extend(matrix):
+    flat_list = []
+    for row in matrix:
+            flat_list.extend(row)
+    return flat_list
 
+def issuecalculate(group):
+    issues = group['issues'].str.split(pat =';', expand=True)
+    issuecounts = flatten_extend(issues.values)
+    issuecounts= [x for x in issuecounts if x is not None]
+    issuevalue =  Counter(issuecounts)
+    df3 = pd.DataFrame.from_dict(issuevalue, orient='index').reset_index()
+    return df3
 results = protestsclean.head(10).groupby(['statefips', 'countyfips','year']).apply(issuecalculate)
 
 test = results.index.to_frame(index=False)
