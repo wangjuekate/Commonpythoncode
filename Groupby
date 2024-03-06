@@ -40,3 +40,26 @@ test['issues'] = results.iloc[:,0]
 test['issuesnum'] = results.iloc[:,1]
 
 print(test)
+
+def eachyearmedian(input):
+
+#problem cannot find the matched class for startup and public firms
+
+    medianalgorithm = np.median(input['algorithm'])
+    mediancompute = np.median(input['compute'])
+    data = {
+    "medianalgorithm": [medianalgorithm] ,
+    "mediancompute": [mediancompute]
+    }
+    print(data)
+    df = pd.DataFrame(data)
+
+    return(df)
+
+addmediacapability = publicfirmpatents3.head(100).groupby(['year']).apply(eachyearmedian)
+print(addmediacapability)
+
+test = addmediacapability.index.to_frame(index=False)
+results = pd.DataFrame(addmediacapability).reset_index(drop=True)
+test['mediaalgorithm'] = results.iloc[:,0]
+test['mediacompute'] = results.iloc[:,1]
