@@ -1,1 +1,1 @@
-df.loc[which(df.B < 100), ['A']]
+df.loc[(df.B < 100), ['A']]
