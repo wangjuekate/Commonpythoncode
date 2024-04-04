@@ -3,7 +3,7 @@ def matchlargedataset(input1,input2,merge1,merge2):
     input1['index'] = input1.index
     input2['index'] = input2.index
     duplicates = pd.Series(input1[merge1])
-    tryjoin = match_strings(input2['firm'],duplicates,max_n_matches=1,min_similarity=0.8)
+    tryjoin = match_strings(input2[merge2],duplicates,max_n_matches=1,min_similarity=0.8)
     tryjoin = tryjoin.merge(input2, left_on='left_index', right_on='index')
     tryjoin =tryjoin.merge(input1, left_on = 'right_index', right_on = 'index')
     return(tryjoin)
