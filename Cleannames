@@ -1,6 +1,6 @@
 
 
-def(namelist):
+def cleannamelist(namelist):
   list_raworg_nodup = list(namelist)
 
   
