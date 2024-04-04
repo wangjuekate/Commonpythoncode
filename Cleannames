@@ -113,4 +113,4 @@ def cleannamelist(namelist):
           newname = re.sub(match_re, replace_char, name)
           list_cleanorg[i] = newname
           n+=1
-return(list_cleanorg)
+  return(list_cleanorg)
