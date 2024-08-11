@@ -1,3 +1,6 @@
 conda env list
 source activate subscribe
 pip install gensim
+
+
+python -m pip install packages
