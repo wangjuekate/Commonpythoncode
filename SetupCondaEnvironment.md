@@ -1,9 +1,12 @@
 conda env list
+
 conda deactivate
 
 
 conda remove -n subscribe --all
+
 source activate spyder-env
+
 source activate topicenviroment 
 
 
