@@ -2,11 +2,16 @@
 def matchlargedataset(input1,input2,merge1,merge2):
     input1['index'] = input1.index
     input2['index'] = input2.index
+    input1[merge1] = input1[merge1].astype(str)
+    input2[merge2] = input2[merge2].astype(str)
     duplicates = pd.Series(input1[merge1])
     tryjoin = match_strings(input2[merge2],duplicates,max_n_matches=1,min_similarity=0.8)
     tryjoin = tryjoin.merge(input2, left_on='left_index', right_on='index')
     tryjoin =tryjoin.merge(input1, left_on = 'right_index', right_on = 'index')
     return(tryjoin)
+
+matched = matchlargedataset(nvidianventure, assignee,'Name','newname' )
+
 #input is a dataframe
 #merge is the column names to merge on
 
@@ -33,53 +38,6 @@ import concurrent.futures
 os.chdir('/Users/jjw6286/Downloads/CSR_Markasinsurance/Match_subsidaries/')
 
 
-breachID = pd.read_json("/Users/jjw6286/Downloads/CSR_Markasinsurance/Match_publicfirm/leftoverbreach.json")
-cusip = pd.read_csv('/Users/jjw6286/Downloads/CSR_Markasinsurance/Match_subsidaries/Subsidarycompare.csv') 
-breachID = pd.DataFrame(breachID)
-breachID['eventID']= breachID['eventID'].map(str)
-
-
-cusip['index'] = cusip.index
-breachID['index'] = breachID.index
-
-cusip = cusip.dropna()
-
-
-
-
-#drop the empty value and utilize the large string matching to find index. 
-
-
-#put similar index together. 
-
-duplicates = pd.Series(breachID.iloc[1001:2664,0])
-
-tic = time.time()
-matches = match_strings( cusip['clean_company'],duplicates,max_n_matches=1,min_similarity=0.8)
-toc = time.time()
-print(toc -tic)
-
-
-tryjoin = matches.merge(breachID, left_on='right_index', right_on='index')
-
-tryjoin = tryjoin.merge(cusip, left_on='left_index', right_on='index')
-print(tryjoin.values)
-result = tryjoin.to_json(orient="records")
-parsed = json.loads(result)
-with open(f'matchedsub_3.json', 'w') as outfile:
-	json.dump(parsed, outfile)
-
-#match the subsidaries with the firms' cusip id
-matchedsub = pd.read_json("MatchedSub.json")
-'''['left_index' 'left_clean_company' 'similarity' 'right_breachfirm'
- 'right_index' 'breachfirm' 'eventID' 'index_x' 'gvkey' 'clean_company'
- 'index_y']'''
-CUSIP = pd.read_csv("/Users/jjw6286/Downloads/CSR_Markasinsurance/ActivistsShareholder/cusip_2007_2022_complete.csv")
-print(CUSIP.columns.values)
-'''['gvkey' 'tic' 'cusip' 'conml']'''
-joinwithCUSIP = matchedsub.merge(CUSIP,  left_on='gvkey', right_on='gvkey')
-print(len(joinwithCUSIP.index))
-print(joinwithCUSIP.iloc[1,])
 result = joinwithCUSIP.to_json(orient="records")
 parsed = json.loads(result)
 with open(f'Submatch_CUSIP.json', 'w') as outfile:
