@@ -1,3 +1,12 @@
+
+grouped =panel.groupby(['unique_id'])
+
+aggindustrysale = grouped.agg({'sentiment_score': ['mean','std']})
+aggindustrysale = aggindustrysale.reset_index()
+
+results = firmdata.groupby(['unique_id']).apply(mean)
+
+
 def matchcity(group):
     statetarget = group.iloc[0,0]
     testGeo = Geo.loc[Geo['state_id'] == statetarget]
