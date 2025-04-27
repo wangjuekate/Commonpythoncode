@@ -9,4 +9,4 @@ conda env remove --name myenv
 
 conda install python=<version>
 
-
+conda create --name myenv python=3.10
