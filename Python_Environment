@@ -7,3 +7,6 @@ python -m pip install packages
 
 conda env remove --name myenv
 
+conda install python=<version>
+
+
