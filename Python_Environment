@@ -4,3 +4,6 @@ pip install gensim
 
 
 python -m pip install packages
+
+conda env remove --name myenv
+
